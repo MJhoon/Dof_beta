@@ -26,11 +26,9 @@
         </div>
       </div>
     </div>
-
-    {{weelDescriptionId}}
-    <WeelDescription  v-show="weelDescriptionOn == true" @weelDataSend="weelDescriptionOn = false" :weelData="weelData[weelDescriptionId]"/>
+    <Modal></Modal>
     <Login v-if="userLoginOn == false" @userLoginOn="userLoginOn = true" />
-
+    <WeelDescription  v-show="weelDescriptionOn == true" @weelDataSend="weelDescriptionOn = false" :weelData="weelData[weelDescriptionId]"/>
     <AddGoogleMap v-if="userLoginOn == true" @weelDataSend="weelDescriptionOn = true; weelDescriptionId = $event;" :weelData="weelData" />
 
     <!-- <Map /> -->
@@ -41,6 +39,7 @@
 </template>
 
 <script>
+import Modal from './components/ModalForm.vue'
 import Login from "./components/Login.vue";
 import WeelDescription from './components/WeelDescription.vue';
 // import Map from './components/Map.vue'
@@ -51,6 +50,7 @@ export default {
   data() {
     return {
       userLoginOn: true,
+
       modalLocationOn: true,
 
       /*weel 상세정보 data*/
@@ -73,9 +73,9 @@ export default {
           weelState: "in_operation",
           location: "seoul mapogu worldcup-bookro 396",
           position: { lat: -33.91721, lng: 151.225 },
-          report: "false",
+          report: false,
           editing: "0",
-          workRequest: "false"
+          workRequest: false // 업무요청
         },
         {
           id: "1",
@@ -92,9 +92,9 @@ export default {
           weelState: "downtime",
           location: "seoul juonggu seajongdaero 21gil 15",
           position: { lat: -33.922, lng: 151.2282 },
-          report: "true",
+          report: true,
           editing: "0",
-          workRequest: "true"
+          workRequest: true // 업무요청
         },
         {
           id: "2",
@@ -111,9 +111,9 @@ export default {
           weelState: "private",
           location: "seoul jongrogu jongro 14",
           position: { lat: -33.91747, lng: 151.231 },
-          report: "true",
+          report: true,
           editing: "0",
-          workRequest: "true"
+          workRequest: true // 업무요청
         },
       ],
     };
@@ -123,6 +123,7 @@ export default {
     WeelDescription,
     Login,
     AddGoogleMap,
+    Modal,
   },
 };
 </script>

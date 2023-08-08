@@ -1,6 +1,6 @@
 <template>
   <div class="popUp">
-    <div class="popUp-container">
+    <div class="popUp-container" v-if="weelJobRequestVisible === false">
       <div class="popUp-wrapper">
         <div class="popUp-title-box">
           <h4>{{ weelData.weelName }}</h4>
@@ -10,42 +10,62 @@
           <button></button>
         </div>
         <p class="popUp-sub-title">ADMIN 명 : {{ weelData.adminName }}</p>
-        <div class="popUp-text-box">
+        <div class="popUp-text-box" :class="{ on: weelDetailVisible }">
           <p>OWNER명 : {{ weelData.onnerName }}</p>
           <p>OWNER 담당자명 : {{ weelData.onnerManagerName }}</p>
           <p>WELL 계약 기간 : {{ weelData.weelTerm }}</p>
-          <p>담당 USER명 : {{ weelData.userManagerName }}</p>
-          <p>TYPE : {{ weelData.type }}</p>
-          <p>USER 계약 기간 : {{ weelData.userTerm }}</p>
+					<div v-if="weelData.workRequest == true" style="color: #0473B5">
+						<p>담당 USER명 : {{ weelData.userManagerName }}</p>
+						<p>TYPE : {{ weelData.type }}</p>
+						<p>USER 계약 기간 : {{ weelData.userTerm }}</p>
+					</div>
         </div>
-        <p class="btn-detail" @click="toggleAction('popUp-text-box')">
-          WEEL 상세정보 >
-        </p>
+        <p class="btn-detail" @click="toggleDetail()"
+				>{{ weelDetailVisible ? "간략히 보기 >" : "WEEL 상세정보 >" }}</p>
         <div class="btn-box-2">
-          <button>업무 요청</button>
+					<button @click="handleButtonClick" :style="{ backgroundColor: weelData.workRequest ? '#fff' : 'rgb(79, 79, 79)', color: weelData.workRequest ? '#000' : '#fff' }"> {{weelData.workRequest ? '요청 완료' : '업무 요청'}}</button>
           <button style="background-color: #fff; color: #000">업무 확인</button>
         </div>
-        <button class="btn-1">월간 리포트 작성</button>
+        <button class="btn-1">월간 리포트 {{weelData.report ? "수정" : "작성"}}</button>
       </div>
-      <button class="btn-close-popup" @click="$emit('weelDataSend')"></button>
+		<button class="btn-close-popup" @click="$emit('weelDataSend')"></button>
     </div>
+		<WeelJobRequestVue v-if="weelJobRequestVisible === true" :weelName="weelData.weelName" :adminName="weelData.adminName"/>
   </div>
 </template>
 
 <script>
+import WeelJobRequestVue from './WeelJobRequest.vue';
+
 export default {
   data() {
-    return {};
+    return {
+      weelDescriptionOn: false,
+			weelDetailVisible: false,
+			weelJobRequestVisible: false,
+		};
   },
-  methods: {
-    toggleAction(target) {
-      const element = document.querySelector(`.${target}`);
-      element.classList.toggle("on");
-    },
-  },
+	components: {
+		WeelJobRequestVue,
+	},
   props: {
     weelData: Object,
   },
+	methods: {
+		toggleDetail() {
+			this.weelDetailVisible = !this.weelDetailVisible;
+		},
+		handleButtonClick() {
+			if(!this.weelData.workRequest){
+				console.log('업무 요청 드가자');
+				this.weelJobRequestVisible = true;
+				this.weelJobRequest();
+			}
+		},
+		weelJobRequest() {
+
+		},
+	}
 };
 </script>
 
@@ -74,6 +94,7 @@ export default {
 .popUp-title-box {
   display: flex;
   align-items: center;
+	margin-bottom: 12px;
 }
 .popUp-title-box h4 {
   font-weight: 600;
@@ -117,6 +138,7 @@ export default {
   line-height: 22px;
 }
 .popUp-text-box.on {
+	font-weight: "Bold";
   height: auto;
 }
 .btn-detail {
