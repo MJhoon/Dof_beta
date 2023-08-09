@@ -1,29 +1,28 @@
 <template>
-  <GmapMap
+  <GoogleMap
+    api-key="AIzaSyDNhn5qcitFbev-MubnJoQkdGwNTifkjzw"
     :center="center"
     :zoom="16"
     :styles="mapStyle"
+    language="kor"
     style="width: 100%; height: 100%"
-    :options="{
-      mapTypeControl: false,
-      zoomControl: false,
-      streetViewControl: false,
-      fullscreenControl: false,
-      scaleControl: false,
-    }"
   >
-    <GmapMarker
+    <Marker
       :key="index"
       v-for="(m, index) in locationMarkers"
-      :position="m.position"
+      :options="{
+        position: m.position,
+        icon: getIconUrl(m.weelState),
+      }"
       :clickable="true"
       @click="handleMarkerClick(m.id)"
-      :icon="getIconUrl(m.weelState)"
-    />
-  </GmapMap>
+    ></Marker>
+  </GoogleMap>
 </template>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNhn5qcitFbev-MubnJoQkdGwNTifkjzw"></script>
+
 <script>
+import { GoogleMap, Marker } from "vue3-google-map";
+
 export default {
   name: "AddGoogleMap",
   data() {
@@ -68,14 +67,19 @@ export default {
       ],
     };
   },
+  components: {
+    GoogleMap,
+    Marker,
+  },
   props: {
     weelData: Array,
   },
   methods: {
     handleMarkerClick(id) {
       // 부모 컴포넌트로 이벤트를 전달합니다.
-      this.$emit("weelDataSend", id);
-      console.log("weelDataSend 이벤트를 발생시킵니다. ID:", id);
+      this.$store.commit("weelDescriptionId", id);
+      console.log("weelDescriptionId 이벤트를 발생시킵니다. ID:", id);
+      this.$store.commit('weelDescriptionOn');
     },
     /*상태에 따른 icon 이미지 요청*/
     getIconUrl(weelState) {

@@ -48,7 +48,7 @@ export default {
   methods: {
     userLogin() {
       if (this.userId === "master" && this.userPassword === "1") {
-        this.$emit("userLoginOn",this.userLoginOn);
+        this.$store.commit('userLoginOn')
         alert("로그인성공");
       }
     },
@@ -123,13 +123,10 @@ header {
 .orange {
   color: #ff8c21;
 }
-.logInfo {
-}
 .logInfo p {
   color: #666;
 }
 .logInfo header {
-  margin-top: 48px;
   margin-bottom: 32px;
 }
 .logInfo .btn_group {
@@ -161,7 +158,7 @@ header {
 /* Common */
 .right {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .w100 {
   width: 100%;

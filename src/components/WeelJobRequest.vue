@@ -36,7 +36,7 @@
         </div>
         <div v-if="workStep === 2">
 					<form @submit.prevent="submitFormDate">
-						<date-picker v-model="value1" type="date" range placeholder="시작일 ~ 종료일"></date-picker>
+						<!-- <date-picker v-model="value1" type="date" range placeholder="시작일 ~ 종료일"></date-picker> -->
 						<!-- <date-picker v-model="value1" value-type="format" format="YYYY-MM-DD"></date-picker>
 						<date-picker v-model="value2" value-type="format" format="YYYY-MM-DD"></date-picker> -->
             <div class="btn-box-4" style="margin-bottom: 12px">
@@ -59,16 +59,12 @@
     </div>
     <button class="btn-close-popup" @click="$emit('weelDataSend')"></button>
   </div>
-	<Modal>
-		<template></template>
-	</Modal>
+	<Modal></Modal>
 </div>
 </template>
 
 <script>
 import Modal from "./ModalForm.vue"
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
 
 export default {
   data() {
@@ -84,8 +80,6 @@ export default {
       console.log('선택한 날짜:', this.value3);
 			if(this.workCheck.length === 0){
 				alert('업무의 종류를 선택해주세요.');
-			}else{
-
 			}
     },
 		submitFormDate() {
@@ -104,7 +98,6 @@ export default {
     },
   },
 	components: {
-		DatePicker,
 		Modal,
 	},
   props: {

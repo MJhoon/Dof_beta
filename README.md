@@ -1,4 +1,4 @@
-# DOF 앱, 어드민 구축 프로젝트
+# dof-master
 
 ## Project setup
 ```
@@ -22,14 +22,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-### Vue 버전확인: 2.7.14
-```
-npm list vue
-```
-
-### Vue Router 설치완료
-
-### GoogleMapAPI 설정 참고사이트
-https://developers.google.com/maps/documentation/javascript/reference/marker?hl=ko#Icon.url

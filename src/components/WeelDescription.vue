@@ -28,7 +28,7 @@
         </div>
         <button class="btn-1">월간 리포트 {{weelData.report ? "수정" : "작성"}}</button>
       </div>
-		<button class="btn-close-popup" @click="$emit('weelDataSend')"></button>
+		<button class="btn-close-popup" @click="$store.commit('weelDescriptionOff')"></button>
     </div>
 		<WeelJobRequestVue v-if="weelJobRequestVisible === true" :weelName="weelData.weelName" :adminName="weelData.adminName"/>
   </div>

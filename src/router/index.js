@@ -1,27 +1,20 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../components/Home'
-import Login from '../components/Login'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Login from '../components/Login.vue'
 
-Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: 'home',
-    component: Home
+    path: '/',
+    name: 'Home',
+    component: Login
   },
-  {
-    path: "/login",
-    name: 'login',
-    component: () => import('../components/Login.vue')
-  }
-];
+  // 다른 라우팅 설정 추가
+]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHashHistory(),
   routes
-});
+})
 
-export default router; 
+
+export default router

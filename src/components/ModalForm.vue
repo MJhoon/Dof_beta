@@ -1,7 +1,7 @@
 <template>
-    <div class="modal" v-if="modalLocationOn == true">
+    <div class="modal">
       <div class="modal-container">
-        <button class="btn-close" @click="modalLocationOn = false"></button>
+        <button class="btn-close" @click="$store.commit('modalOff','modalLocationOn')"></button>
         <div class="modal-text-box">
           <h4 class="modal-title">사용자 위치 접근 허용</h4>
           <p class="modal-text">
@@ -19,7 +19,8 @@
 </template>
 
 <script>
-export default {};
+export default {
+};
 </script>
 
 <style>

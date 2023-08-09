@@ -1,20 +1,16 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router/index.js'
-import * as VueGoogleMaps from "vue2-google-maps"
+// src/main.js
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router/index.js";
+import VueGoogleMaps from "vue3-google-map";
+import store from "./store.js"
 
-
-Vue.config.productionTip = false
-Vue.use(VueGoogleMaps, {
-  load: {
+createApp(App)
+  .use(router)
+  .use(VueGoogleMaps, {
     key: "AIzaSyDNhn5qcitFbev-MubnJoQkdGwNTifkjzw",
     libraries: "places",
     region: "KR"
-  }
-});
-
-new Vue({
-  router,
-  render: h => h(App),
-}).$mount('#app')
-
+  })
+  .use(store)
+  .mount("#app");
