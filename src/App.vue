@@ -1,10 +1,22 @@
 <template>
     <nav id="nav">
     </nav>
-    {{$store.state.modalLocationOn}}
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="울랄라랩 메인"/> -->
-    <Modal v-if="$store.state.modalLocationOn === true"></Modal>
+    <Modal v-if="$store.state.modalLocationOn === true" :currentModalpage="currentModalpage[0]">
+      <template v-slot:title>사용자 위치 접근 허용</template>
+      <template v-slot:text>
+        위치 서비스는 앱을 이용하는데 필요하며, 업무 관리 작업을 위해서도
+        필수적입니다. 앱을 사용하는 동안 사용자의 위치에 접근하도록
+        허용하시겠습니까?
+      </template>
+      <template v-slot:btn-box>
+        <div class="btn-box">
+          <button class="white">거부</button>
+          <button class="black">허용</button>
+        </div>
+      </template>
+    </Modal>
     <Login v-if="$store.state.userLoginOn == false" />
     <WeelDescription  v-if="$store.state.weelDescriptionOn == true" @weelDataSend="weelDescriptionOn = false" :weelData="weelData[$store.state.weelDescriptionId]"/>
     <AddGoogleMap v-if="$store.state.userLoginOn == true" @weelDataSend="$store.state.weelDescriptionId = $event;" :weelData="weelData" />
@@ -24,7 +36,7 @@ export default {
   name: "App",
   data() {
     return {
-
+      currentModalpage: ["modalLocationOn"],
       /*weel 상세정보 data*/
       weelDescriptionOn: false,
       weelDescriptionStep: 0,

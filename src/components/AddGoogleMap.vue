@@ -7,21 +7,26 @@
     language="kor"
     style="width: 100%; height: 100%"
   >
-    <Marker
+    <CustomMarker
       :key="index"
       v-for="(m, index) in locationMarkers"
+      title="fuckkkkk"
       :options="{
         position: m.position,
         icon: getIconUrl(m.weelState),
       }"
       :clickable="true"
       @click="handleMarkerClick(m.id)"
-    ></Marker>
+    >
+      <img :src="getIconUrl(m.weelState)" alt="marker" />
+      <p class="custom-marker-title">{{ $store.state.weelData[m.id].weelName }}</p>
+      <p class="custom-marker-type">{{ $store.state.weelData[m.id].adminName }}</p>
+    </CustomMarker>
   </GoogleMap>
 </template>
 
 <script>
-import { GoogleMap, Marker } from "vue3-google-map";
+import { GoogleMap, CustomMarker } from "vue3-google-map";
 
 export default {
   name: "AddGoogleMap",
@@ -69,7 +74,7 @@ export default {
   },
   components: {
     GoogleMap,
-    Marker,
+    CustomMarker,
   },
   props: {
     weelData: Array,
@@ -79,7 +84,7 @@ export default {
       // 부모 컴포넌트로 이벤트를 전달합니다.
       this.$store.commit("weelDescriptionId", id);
       console.log("weelDescriptionId 이벤트를 발생시킵니다. ID:", id);
-      this.$store.commit('weelDescriptionOn');
+      this.$store.commit("weelDescriptionOn");
     },
     /*상태에 따른 icon 이미지 요청*/
     getIconUrl(weelState) {
@@ -110,7 +115,8 @@ export default {
   font-weight: 700;
 }
 .custom-marker-type {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(84, 89, 94, 0.6);
 }
 </style>

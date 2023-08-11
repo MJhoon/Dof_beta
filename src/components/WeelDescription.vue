@@ -2,11 +2,11 @@
   <div class="popUp">
     <div class="popUp-container" v-if="weelJobRequestVisible === false">
       <div class="popUp-wrapper">
-        <div class="popUp-title-box">
+        <div class="popUp-title-box">          
           <h4>{{ weelData.weelName }}</h4>
-          <span v-if="weelData.state === 'need_request'" style="background-color: #F19998;">요청 필요</span>
-          <span v-if="weelData.state === 'business_progress'" style="background-color: #ffc70b;">업무진행</span>
-          <span v-if="weelData.state === 'work_done'" style="background-color: #1CB44A;">업무완료</span>
+          <span v-if="$store.state.weelData[$store.state.weelDescriptionId].state === 'need_request'" style="background-color: #F19998;">요청 필요</span>
+          <span v-if="$store.state.weelData[$store.state.weelDescriptionId].state === 'business_progress'" style="background-color: #ffc70b;">업무진행</span>
+          <span v-if="$store.state.weelData[$store.state.weelDescriptionId].state === 'work_done'" style="background-color: #1CB44A;">업무완료</span>
           <button></button>
         </div>
         <p class="popUp-sub-title">ADMIN 명 : {{ weelData.adminName }}</p>
@@ -23,14 +23,14 @@
         <p class="btn-detail" @click="toggleDetail()"
 				>{{ weelDetailVisible ? "간략히 보기 >" : "WEEL 상세정보 >" }}</p>
         <div class="btn-box-2">
-					<button @click="handleButtonClick" :style="{ backgroundColor: weelData.workRequest ? '#fff' : 'rgb(79, 79, 79)', color: weelData.workRequest ? '#000' : '#fff' }"> {{weelData.workRequest ? '요청 완료' : '업무 요청'}}</button>
+					<button @click="handleButtonClick" :style="{ backgroundColor: $store.state.weelData[$store.state.weelDescriptionId].workRequest ? '#fff' : 'rgb(79, 79, 79)', color: $store.state.weelData[$store.state.weelDescriptionId].workRequest ? '#000' : '#fff' }"> {{weelData.workRequest ? '요청 완료' : '업무 요청'}}</button>
           <button style="background-color: #fff; color: #000">업무 확인</button>
         </div>
         <button class="btn-1">월간 리포트 {{weelData.report ? "수정" : "작성"}}</button>
       </div>
 		<button class="btn-close-popup" @click="$store.commit('weelDescriptionOff')"></button>
     </div>
-		<WeelJobRequestVue v-if="weelJobRequestVisible === true" :weelName="weelData.weelName" :adminName="weelData.adminName"/>
+		<WeelJobRequestVue v-if="weelJobRequestVisible === true" :weelData="weelData"/>
   </div>
 </template>
 
@@ -56,14 +56,10 @@ export default {
 			this.weelDetailVisible = !this.weelDetailVisible;
 		},
 		handleButtonClick() {
-			if(!this.weelData.workRequest){
+			if(!this.$store.state.weelData[this.$store.state.weelDescriptionId].workRequest){
 				console.log('업무 요청 드가자');
 				this.weelJobRequestVisible = true;
-				this.weelJobRequest();
-			}
-		},
-		weelJobRequest() {
-
+      }
 		},
 	}
 };

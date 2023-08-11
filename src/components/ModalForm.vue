@@ -1,25 +1,28 @@
 <template>
-    <div class="modal">
-      <div class="modal-container">
-        <button class="btn-close" @click="$store.commit('modalOff','modalLocationOn')"></button>
-        <div class="modal-text-box">
-          <h4 class="modal-title">사용자 위치 접근 허용</h4>
-          <p class="modal-text">
-            위치 서비스는 앱을 이용하는데 필요하며, 업무 관리 작업을 위해서도
-            필수적입니다. 앱을 사용하는 동안 사용자의 위치에 접근하도록
-            허용하시겠습니까?
-          </p>
-          <div class="btn-box">
-            <button class="white">거부</button>
-            <button class="black">허용</button>
-          </div>
-        </div>
+  <div class="modal">
+    <div class="modal-container">
+      <button
+        class="btn-close"
+        @click="$store.commit('modalOff', currentModalpage)"
+      ></button>
+      <div class="modal-text-box">
+        <h4 class="modal-title">
+          <slot name="title"></slot>
+        </h4>
+        <p class="modal-text">
+          <slot name="text"></slot>
+        </p>
+        <slot name="btn-box"></slot>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
+  props: {
+    currentModalpage: String,
+  },
 };
 </script>
 
@@ -38,10 +41,10 @@ export default {
   width: 100%;
   background-color: #f6f6f6;
 }
-.btn-close{
+.btn-close {
   position: absolute;
   right: 18px;
-  top:18px;
+  top: 18px;
   width: 24px;
   height: 24px;
   background: url(../assets/btn-close.png);
@@ -83,4 +86,5 @@ export default {
 .btn-box .black {
   background-color: #4f4f4f;
   color: #ffffff;
-}</style>
+}
+</style>
