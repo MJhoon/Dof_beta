@@ -70,6 +70,7 @@ export default {
 .btn-box {
   display: flex;
   justify-content: space-between;
+  margin: 4px 0;
 }
 .btn-box button {
   width: calc(50% - 10px);

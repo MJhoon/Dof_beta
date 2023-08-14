@@ -1,4 +1,21 @@
 <template>
+  <Modal
+    v-if="$store.state.modalLocationOn === true"
+    :currentModalpage="$store.state.currentModalpage.modalLocationOn"
+  >
+    <template v-slot:title>사용자 위치 접근 허용</template>
+    <template v-slot:text>
+      위치 서비스는 앱을 이용하는데 필요하며, 업무 관리 작업을 위해서도
+      필수적입니다. 앱을 사용하는 동안 사용자의 위치에 접근하도록
+      허용하시겠습니까?
+    </template>
+    <template v-slot:btn-box>
+      <div class="btn-box">
+        <button class="white">거부</button>
+        <button class="black">허용</button>
+      </div>
+    </template>
+  </Modal>
   <GoogleMap
     api-key="AIzaSyDNhn5qcitFbev-MubnJoQkdGwNTifkjzw"
     :center="center"
@@ -19,14 +36,19 @@
       @click="handleMarkerClick(m.id)"
     >
       <img :src="getIconUrl(m.weelState)" alt="marker" />
-      <p class="custom-marker-title">{{ $store.state.weelData[m.id].weelName }}</p>
-      <p class="custom-marker-type">{{ $store.state.weelData[m.id].adminName }}</p>
+      <p class="custom-marker-title">
+        {{ $store.state.weelData[m.id].weelName }}
+      </p>
+      <p class="custom-marker-type">
+        {{ $store.state.weelData[m.id].adminName }}
+      </p>
     </CustomMarker>
   </GoogleMap>
 </template>
 
 <script>
 import { GoogleMap, CustomMarker } from "vue3-google-map";
+import Modal from "../components/ModalForm.vue";
 
 export default {
   name: "AddGoogleMap",
@@ -75,15 +97,19 @@ export default {
   components: {
     GoogleMap,
     CustomMarker,
+    Modal,
   },
   props: {
     weelData: Array,
+  },
+  mounted() {
+    this.$store.commit("modalOn", "modalLocationOn");
   },
   methods: {
     handleMarkerClick(id) {
       // 부모 컴포넌트로 이벤트를 전달합니다.
       this.$store.commit("weelDescriptionId", id);
-      console.log("weelDescriptionId 이벤트를 발생시킵니다. ID:", id);
+      console.log("weelDescriptionId   이벤트를 발생시킵니다. ID:", id);
       this.$store.commit("weelDescriptionOn");
     },
     /*상태에 따른 icon 이미지 요청*/

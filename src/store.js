@@ -3,8 +3,11 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
+      userId: "",
       userLoginOn: false,
 			
+      monthlyReportOn: false,
+
       weelDescriptionOn: false,
       weelDescriptionId: 0,
       weelDescriptionStep: 0,
@@ -26,7 +29,7 @@ const store = createStore({
           position: { lat: -33.91721, lng: 151.225 },
           report: false,
           editing: "0",
-          workRequest: false // 업무요청
+          workRequest: false 
         },
         {
           id: "1",
@@ -45,7 +48,7 @@ const store = createStore({
           position: { lat: -33.922, lng: 151.2282 },
           report: true,
           editing: "0",
-          workRequest: true // 업무요청
+          workRequest: true 
         },
         {
           id: "2",
@@ -64,7 +67,19 @@ const store = createStore({
           position: { lat: -33.91747, lng: 151.231 },
           report: true,
           editing: "0",
-          workRequest: true // 업무요청
+          workRequest: true
+        },
+      ],
+      reportData: [
+        {
+          id: "0",
+          startDate:{},
+          endDate:{},
+          weelName: "",
+          onner:"",
+          grossVolume:"",
+          totalFluids:"",
+          comments:"",
         },
       ],
 			currentModalpage: {
@@ -86,6 +101,12 @@ const store = createStore({
     };
   },
   mutations: {
+    monthlyReportOn(state) {
+      state.monthlyReportOn = true;
+    },
+    monthlyReportOff(state) {
+      state.monthlyReportOn = false;
+    },
 		workCheckListSend(state, workCheckList, selectedDate) {
 			const targetWeelData = state.weelData.find(item => item.id === state.weelDescriptionId);
 			if (targetWeelData) {
@@ -101,8 +122,8 @@ const store = createStore({
 				this.commit("modalOn", state.currentModalpage.modalWorkRequestDone)
 			}
 		},
-    userLoginOn(state) {
-      state.userLoginOn = true;
+    userLoginOn(state, userId) {
+      state.userId = userId
       state.modalLocationOn = true;
     },
 		userLoginOff(state) {

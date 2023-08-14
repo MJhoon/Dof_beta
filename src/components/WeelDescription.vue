@@ -26,7 +26,7 @@
 					<button @click="handleButtonClick" :style="{ backgroundColor: $store.state.weelData[$store.state.weelDescriptionId].workRequest ? '#fff' : 'rgb(79, 79, 79)', color: $store.state.weelData[$store.state.weelDescriptionId].workRequest ? '#000' : '#fff' }"> {{weelData.workRequest ? '요청 완료' : '업무 요청'}}</button>
           <button style="background-color: #fff; color: #000">업무 확인</button>
         </div>
-        <button class="btn-1">월간 리포트 {{weelData.report ? "수정" : "작성"}}</button>
+        <button class="btn-1" @click="handleReport">월간 리포트 {{weelData.report ? "수정" : "작성"}}</button>
       </div>
 		<button class="btn-close-popup" @click="$store.commit('weelDescriptionOff')"></button>
     </div>
@@ -52,6 +52,13 @@ export default {
     weelData: Object,
   },
 	methods: {
+    handleReport(){
+      if(this.$store.state.weelData.report === true){
+        this.$store.commit("monthlyReportOn")
+      }else{
+        this.$store.commit("monthlyReportOff")
+      }
+    },
 		toggleDetail() {
 			this.weelDetailVisible = !this.weelDetailVisible;
 		},
@@ -149,6 +156,7 @@ export default {
 .btn-box-2 {
   display: flex;
   justify-content: space-between;
+  margin: 4px 0;
 }
 .btn-box-2 button {
   width: calc(50% - 5px);
@@ -165,5 +173,6 @@ export default {
   border: 1px solid rgb(79, 79, 79);
   background-color: rgb(79, 79, 79);
   color: #fff;
+  margin: 4px 0;
 }
 </style>

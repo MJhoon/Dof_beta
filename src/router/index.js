@@ -1,20 +1,27 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Login from '../components/Login.vue'
-
+import { createRouter, createWebHashHistory } from "vue-router";
+import Login from "../components/Login.vue";
+import AddGoogleMap from "../components/AddGoogleMap.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Login
+    path: "/",
+    name: "Login",
+    component: Login,
   },
-  // 다른 라우팅 설정 추가
-]
+  {
+    path: "/login/:userid",
+    name: "AddGoogleMap",
+    component: 
+      AddGoogleMap,
+  },
+  {
+
+  },
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 
-
-export default router
+export default router;

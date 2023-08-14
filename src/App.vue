@@ -1,42 +1,25 @@
 <template>
-    <nav id="nav">
-    </nav>
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="울랄라랩 메인"/> -->
-    <Modal v-if="$store.state.modalLocationOn === true" :currentModalpage="currentModalpage[0]">
-      <template v-slot:title>사용자 위치 접근 허용</template>
-      <template v-slot:text>
-        위치 서비스는 앱을 이용하는데 필요하며, 업무 관리 작업을 위해서도
-        필수적입니다. 앱을 사용하는 동안 사용자의 위치에 접근하도록
-        허용하시겠습니까?
-      </template>
-      <template v-slot:btn-box>
-        <div class="btn-box">
-          <button class="white">거부</button>
-          <button class="black">허용</button>
-        </div>
-      </template>
-    </Modal>
-    <Login v-if="$store.state.userLoginOn == false" />
-    <WeelDescription  v-if="$store.state.weelDescriptionOn == true" @weelDataSend="weelDescriptionOn = false" :weelData="weelData[$store.state.weelDescriptionId]"/>
-    <AddGoogleMap v-if="$store.state.userLoginOn == true" @weelDataSend="$store.state.weelDescriptionId = $event;" :weelData="weelData" />
-
-    <!-- <Map /> -->
-    <!-- <Map /> -->
-    <!-- <router-view/> -->
+  <nav id="nav"></nav>
+  <router-view
+    @weelDataSend="$store.state.weelDescriptionId = $event"
+    :weelData="weelData"
+  ></router-view>
+  <WeelDescription
+    v-if="$store.state.weelDescriptionOn == true"
+    @weelDataSend="weelDescriptionOn = false"
+    :weelData="weelData[$store.state.weelDescriptionId]"
+  />
+  <MonthlyReport v-if="$store.state.monthlyReportOn == true" />
 </template>
 
 <script>
-import Modal from './components/ModalForm.vue'
-import Login from "./components/Login.vue";
-import WeelDescription from './components/WeelDescription.vue';
-import AddGoogleMap from "./components/AddGoogleMap.vue";
+import MonthlyReport from "./components/MonthlyReport.vue";
+import WeelDescription from "./components/WeelDescription.vue";
 
 export default {
   name: "App",
   data() {
     return {
-      currentModalpage: ["modalLocationOn"],
       /*weel 상세정보 data*/
       weelDescriptionOn: false,
       weelDescriptionStep: 0,
@@ -58,7 +41,7 @@ export default {
           position: { lat: -33.91721, lng: 151.225 },
           report: false,
           editing: "0",
-          workRequest: false // 업무요청
+          workRequest: false, // 업무요청
         },
         {
           id: "1",
@@ -77,7 +60,7 @@ export default {
           position: { lat: -33.922, lng: 151.2282 },
           report: true,
           editing: "0",
-          workRequest: true // 업무요청
+          workRequest: true, // 업무요청
         },
         {
           id: "2",
@@ -96,17 +79,15 @@ export default {
           position: { lat: -33.91747, lng: 151.231 },
           report: true,
           editing: "0",
-          workRequest: true // 업무요청
+          workRequest: true, // 업무요청
         },
       ],
     };
   },
-  
+
   components: {
     WeelDescription,
-    Login,
-    AddGoogleMap,
-    Modal,
+    MonthlyReport,
   },
 };
 </script>
@@ -269,7 +250,6 @@ input[type="password"],
 input[type="tel"] {
   vertical-align: middle;
   font-size: 17px;
-  margin: 4px 0;
   padding: 11px;
   border: 1px solid #ebebeb;
   box-sizing: border-box;
@@ -427,27 +407,20 @@ h2 {
   font-weight: 600;
   margin-bottom: 16px;
 }
-button {
-  padding: 10px;
-  border-radius: 20px;
-  margin: 4px 0;
-  color: #222;
-}
 nav {
   position: fixed;
   padding: 10px;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #fff;
+  background: #2c313f;
   z-index: 9;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  height: 80px;
-  border-radius: 10px 10px 0 0;
+  height: 64px;
+  box-shadow: 0px 2px 2px 0px rgba(212, 211, 243, 0.08) inset;
   box-sizing: border-box;
-  box-shadow: 0 0 10px gray;
   align-items: flex-end;
 }
 nav a {

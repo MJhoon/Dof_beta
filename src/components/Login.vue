@@ -2,7 +2,6 @@
   <div>
     <div class="allWrap logInfo">
       <header>
-        <!-- <h1><a href="#" class="logo" title="울랄라"></a></h1> -->
         <h2>환영합니다!</h2>
         <p>신속하고 정확하게 업무하실 수 있도록 도와드리겠습니다.</p>
       </header>
@@ -22,10 +21,10 @@
           />
         </div>
         <div class="right">
-          <a href="#" class="link_pw">Forgot password?</a>
+          <p class="link_pw">Forgot password?</p>
         </div>
         <div class="btn_group">
-          <button class="btn btn_orange w100">LOGIN</button>
+          <button class="btn btn_orange w100" type="submit" @click="userLogin">LOGIN</button>
         </div>
       </form>
       <div class="btn_group colum">
@@ -48,8 +47,9 @@ export default {
   methods: {
     userLogin() {
       if (this.userId === "master" && this.userPassword === "1") {
-        this.$store.commit('userLoginOn')
+        this.$store.commit('userLoginOn',this.userId)
         alert("로그인성공");
+        this.$router.push(`/login/${this.userId}`)
       }
     },
   },

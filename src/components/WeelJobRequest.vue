@@ -234,7 +234,8 @@ export default {
 }
 .btn-box-4 {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between;  
+  margin: 4px 0;
 }
 .btn-box-4 label {
   width: 23%;
