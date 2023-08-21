@@ -1,14 +1,14 @@
 <template>
   <div class="report-page">
     <header>
-      <button class="btn-back"></button>
-      <h4>월간 리포트 작성</h4>
+      <button class="btn-back" @click="$router.push('/login/:userid')"></button>
+      <h4>월간 리포트</h4>
     </header>
     <main>
       <div class="content-report-header">
         <div class="content-report-tap-menu">
           <button></button>
-          <p>23년 7월</p>
+          <p>23년 7월 {{$store.state.reportData}}</p>
           <button></button>
         </div>
       </div>
@@ -18,29 +18,39 @@
           <p>오래된순</p>
         </div>
         <div class="right">
-          <p>3개의 월간리포트가 있습니다.</p>
+          <p>{{ $store.state.reportData.length }}개의 월간리포트가 있습니다.</p>
         </div>
       </div>
       <div class="content-report-card-container">
-				<ReportCard />      
-        <button>월간 리포트 작성</button>
+        <ReportCard
+          v-for="(report, i) in $store.state.reportData"
+          :key="i"
+          :report="report"
+					@click="$router.push(`/login/:userid/report/${i}`)"
+        />
+        <button @click="$router.push('/login/:userid/report/-1');">월간 리포트 작성</button>
       </div>
     </main>
   </div>
 </template>
 
 <script>
-import ReportCard from '../components/ReportCard.vue'
+import ReportCard from "../components/ReportCard.vue";
 
 export default {
-	components :{ 
-		ReportCard,
-	}
+  data() {
+    return {};
+  },
+  components: {
+    ReportCard,
+  },
 };
 </script>
 
 <style>
 .report-page {
+  position: fixed;
+  z-index: 10;
   width: 100%;
   height: 100vh;
   background-color: #2c313f;
@@ -122,6 +132,8 @@ export default {
 .content-report-card-container {
   position: relative;
   margin-bottom: 64px;
+  max-height: 380px;
+  overflow: scroll;
 }
 .content-report-card-container button {
   position: fixed;
@@ -137,5 +149,4 @@ export default {
   line-height: 27px;
   padding: 9px 0;
 }
-
 </style>

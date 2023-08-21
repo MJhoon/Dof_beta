@@ -9,11 +9,9 @@
     @weelDataSend="weelDescriptionOn = false"
     :weelData="weelData[$store.state.weelDescriptionId]"
   />
-  <MonthlyReport v-if="$store.state.monthlyReportOn == true" />
 </template>
 
 <script>
-import MonthlyReport from "./components/MonthlyReport.vue";
 import WeelDescription from "./components/WeelDescription.vue";
 
 export default {
@@ -87,7 +85,6 @@ export default {
 
   components: {
     WeelDescription,
-    MonthlyReport,
   },
 };
 </script>
@@ -203,7 +200,11 @@ a:focus {
 a label {
   cursor: pointer;
 }
-
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
 address,
 caption,
 em,
@@ -269,6 +270,10 @@ input[type="radio"] {
   border: none;
   -webkit-appearance: none;
 }
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 button {
   overflow: visible;
   margin: 0;
@@ -277,6 +282,9 @@ button {
   font-family: "notokr-regular", "Sans-serif";
   vertical-align: top;
   cursor: pointer;
+}
+main {
+  max-height: calc(100% - 220px);
 }
 button,
 input[type="button"],
@@ -414,7 +422,7 @@ nav {
   right: 0;
   bottom: 0;
   background: #2c313f;
-  z-index: 9;
+  z-index: 11;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

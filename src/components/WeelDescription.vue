@@ -53,17 +53,16 @@ export default {
   },
 	methods: {
     handleReport(){
-      if(this.$store.state.weelData.report === true){
-        this.$store.commit("monthlyReportOn")
-      }else{
-        this.$store.commit("monthlyReportOff")
-      }
+      // if(this.$store.state.weelData.report === false){
+        this.$store.commit('modalOff','weelDescriptionOn');
+        this.$router.push('/login/:userid/report');
+      // }
     },
 		toggleDetail() {
 			this.weelDetailVisible = !this.weelDetailVisible;
 		},
 		handleButtonClick() {
-			if(!this.$store.state.weelData[this.$store.state.weelDescriptionId].workRequest){
+			if(!this.$store.state.weelData[this.$store.state.weelDescriptionId].report){
 				console.log('업무 요청 드가자');
 				this.weelJobRequestVisible = true;
       }
@@ -79,7 +78,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 9;
+  z-index: 100;
   background-color: rgba(217, 217, 217, 0.4);
 }
 .popUp-container {

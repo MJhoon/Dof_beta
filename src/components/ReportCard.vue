@@ -1,10 +1,10 @@
 <template>
   <div class="report-card">
     <div class="report-card-title">
-      <h5>TopOilbank</h5>
+      <h5>{{report.weelName}}</h5>
       <div class="report-card-sub-title">
         <p>작성날짜</p>
-        <p>23.07.01(Wed)</p>
+        <p>{{report.reportCreateDate}}</p>
       </div>
     </div>
     <div class="report-card-info">
@@ -16,7 +16,9 @@
 
 <script>
 export default {
-	
+	props: {
+    report: Object,
+  }
 };
 </script>
 
@@ -26,7 +28,7 @@ export default {
   text-align: left;
   background-color: #252935;
   border-radius: 8px;
-  margin: 0 20px;
+  margin: 4px 20px;
 }
 .report-card-title {
   margin-bottom: 20px;
