@@ -1,21 +1,41 @@
 <template>
-  <div class="report-page">
-    <header>
-      <button class="btn-back" @click="$router.push('/login/:userid')"></button>
+  <div class="report-page pageWrap">
+    <HeaderForm>
+      <button class="btn-back" @click="$router.push(`/login/${$store.state.userId}`)"></button>
       <h4>월간 리포트</h4>
-    </header>
+    </HeaderForm>
     <main>
       <div class="content-report-header">
         <div class="content-report-tap-menu">
-          <button></button>
-          <p>23년 7월 {{$store.state.reportData}}</p>
-          <button></button>
+          <button @click="month -= 1"></button>
+          <p>{{year}}년 {{ month }}월</p>
+          <button @click="month += 1"></button>
         </div>
       </div>
       <div class="content-report-filter">
         <div class="left">
-          <p>최신순</p>
-          <p>오래된순</p>
+          <p
+            :style="
+              sortOrder === 'asc' ? { color: '#777784' } : { color: '#00986E' }
+            "
+            @click="
+              this.sortOrder = 'asc';
+              sortTable();
+            "
+          >
+            최신순
+          </p>
+          <p
+            :style="
+              sortOrder === 'desc' ? { color: '#777784' } : { color: '#00986E' }
+            "
+            @click="
+              this.sortOrder = this.sortOrder = 'desc';
+              sortTable();
+            "
+          >
+            오래된순
+          </p>
         </div>
         <div class="right">
           <p>{{ $store.state.reportData.length }}개의 월간리포트가 있습니다.</p>
@@ -26,9 +46,11 @@
           v-for="(report, i) in $store.state.reportData"
           :key="i"
           :report="report"
-					@click="$router.push(`/login/:userid/report/${i}`)"
+          @click="$router.push(`/login/${$store.state.userId}/report/view/${i}`)"
         />
-        <button @click="$router.push('/login/:userid/report/-1');">월간 리포트 작성</button>
+        <button @click="$router.push(`/login/${$store.state.userId}/report/-1`)">
+          월간 리포트 작성
+        </button>
       </div>
     </main>
   </div>
@@ -36,13 +58,55 @@
 
 <script>
 import ReportCard from "../components/ReportCard.vue";
+import HeaderForm from '../components/HeaderForm.vue'
 
 export default {
   data() {
-    return {};
+    return {
+      sortOrder: "asc",
+      sortBy: "reportCreateDate",
+      tableData: this.$store.state.reportData,
+
+			month: new Date().getMonth() + 1,
+			year: new Date().getFullYear(),
+    };
   },
   components: {
     ReportCard,
+    HeaderForm,
+  },
+	watch : {
+		month(){
+			if(this.month === 0){
+				this.month = 12;
+				this.year -= 1;
+			}else if(this.month === 13){
+				this.month = 1;
+				this.year += 1;
+			}
+		},
+	},
+  methods: {
+    sortTable() {
+      this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
+
+      this.tableData.sort((a, b) => {
+        const sortOrder = this.sortOrder === "asc" ? 1 : -1;
+        const aValue = a[this.sortBy];
+        const bValue = b[this.sortBy];
+
+        if (aValue > bValue) {
+          return sortOrder;
+        } else if (aValue < bValue) {
+          return -sortOrder;
+        } else {
+          return 0;
+        }
+      });
+    },
+  },
+  mounted() {
+    this.sortTable();
   },
 };
 </script>
@@ -55,27 +119,6 @@ export default {
   height: 100vh;
   background-color: #2c313f;
   color: #fff;
-}
-.report-page header {
-  position: relative;
-  padding: 9px 0px;
-}
-.report-page header h4 {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 32px;
-  text-align: center;
-}
-.report-page header button {
-  position: absolute;
-  width: 26px;
-  height: 21px;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: url("../assets/btn-back.png") no-repeat;
-}
-.content-report-header {
 }
 .content-report-tap-menu {
   display: flex;
@@ -131,8 +174,6 @@ export default {
 }
 .content-report-card-container {
   position: relative;
-  margin-bottom: 64px;
-  max-height: 380px;
   overflow: scroll;
 }
 .content-report-card-container button {

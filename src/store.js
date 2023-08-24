@@ -5,9 +5,13 @@ const store = createStore({
     return {
       userId: "",
       userLoginOn: false,
-
+      tapMenuOn: false,
+      isActive : [false,false,false,false,false],//tapNav on/off
       monthlyReportOn: false,
 
+      centerPosition: {
+        lat: -33.919, lng: 151.228 
+      },
       weelDescriptionOn: false,
       weelDescriptionId: 0,
       weelData: [
@@ -73,32 +77,35 @@ const store = createStore({
         {
           startDate: "2023.08.17",
           endDate: "2023.08.19",
-          reportCreateDate: "",
+          reportCreateDate: "2023/08/12(Sat)",
           weelName: "king",
           owner: "Kim",
           grossVolume: "500",
           totalFluids: "2000",
           comments: "오류발생 king",
+          edited: false,
         },
         {
           startDate: "2023.08.21",
           endDate: "2023.08.23",
-          reportCreateDate: "",
+          reportCreateDate: "2023/08/09(Wed)",
           weelName: "prince",
           owner: "MOON",
           grossVolume: "3000",
           totalFluids: "60000",
           comments: "오류발생 prince",
+          edited: false,
         },
         {
           startDate: "2023.08.19",
           endDate: "2023.08.21",
-          reportCreateDate: "",
+          reportCreateDate: "2023/08/14(Mon)",
           weelName: "queen",
           owner: "PARK",
           grossVolume: "820",
           totalFluids: "1640",
           comments: "오류발생 queen",
+          edited: false,
         },
       ],
       /*report select data*/
@@ -121,6 +128,7 @@ const store = createStore({
         modalReportCreateCancel: "modalReportCreateCancel",
         modalReportEdit: "modalReportEdit",
         modalReportEditdelete: "modalReportEditdelete",
+        modalWorklistRequest:"modalWorklistRequest"
       },
       modalWorkCheckConfirm: false,
       modalWorkCheckDateConfirm: false,
@@ -132,10 +140,17 @@ const store = createStore({
       modalReportCreateCancel: false,
       modalReportEdit: false,
       modalReportEditdelete: false,
+      modalWorklistRequest: false
       /*모달 상태값*/
     };
   },
   mutations: {
+    updateWeelDataPosition(state, payload) {
+      state.centerPosition = payload.position;
+    },
+    updateIsActive(state, payload) {
+      state.isActive = payload;
+    },
     deleteReport(state, { id, startDate }) {   
       
       console.log(id);
@@ -196,6 +211,7 @@ const store = createStore({
       }
     },
     userLoginOn(state, userId) {
+      state.userLoginOn = true;
       state.userId = userId;
       state.modalLocationOn = true;
     },
@@ -210,6 +226,9 @@ const store = createStore({
     },
     weelDescriptionOff(state) {
       state.weelDescriptionOn = false;
+    },
+    tapMenuOn(state){
+      state.tapMenuOn = !state.tapMenuOn;
     },
     modalOn(state, modalName) {
       state[modalName] = true;

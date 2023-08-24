@@ -1,5 +1,38 @@
 <template>
-  <nav id="nav"></nav>
+  <nav id="nav" v-show="$store.state.userLoginOn === true">
+    <a
+      href="#"
+      class="btn-nav-map"
+      :class="{ active: isActive[0], 'btn-nav-map-on': isActive[0] }"
+      @click="toggleActive(0)"
+    ></a>
+    <a
+      href="#"
+      class="btn-nav-alert"
+      :class="{ active: isActive[1], 'btn-nav-alert-on': isActive[1] }"
+      @click="toggleActive(1)"
+    ></a>
+    <a
+      href="#"
+      class="btn-nav-bookmark"
+      :class="{ active: isActive[2], 'btn-nav-bookmark-on': isActive[2] }"
+      @click="toggleActive(2)"
+    ></a>
+    <a
+      href="#"
+      class="btn-nav-options"
+      :class="{ active: isActive[3], 'btn-nav-options-on': isActive[3] }"
+      @click="toggleActive(3)"
+    ></a>
+    <a
+      class="btn-nav-tapmenu"
+      :class="{ active: isActive[4], 'btn-nav-tapmenu-on': isActive[4] }"
+      @click="
+        toggleActive(4);
+        tapMenuActive();
+      "
+    ></a>
+  </nav>
   <router-view
     @weelDataSend="$store.state.weelDescriptionId = $event"
     :weelData="weelData"
@@ -9,10 +42,13 @@
     @weelDataSend="weelDescriptionOn = false"
     :weelData="weelData[$store.state.weelDescriptionId]"
   />
+  <TapMenuForm :style="isActive[4] ? { left: 0 } : { left: '100%' }" />
 </template>
 
 <script>
 import WeelDescription from "./components/WeelDescription.vue";
+import TapMenuForm from "./components/TapMenuForm.vue";
+import { mapMutations } from "vuex";
 
 export default {
   name: "App",
@@ -82,9 +118,34 @@ export default {
       ],
     };
   },
+  computed: {
+    isActive() {
+      return this.$store.state.isActive;
+    },
+    tabClasses() {
+      return this.isActive.map((active) => ({
+        active,
+        "btn-nav-map-on": active,
+      }));
+    },
+  },
+  methods: {
+    ...mapMutations(["updateIsActive", "tapMenuOn"]),
+    toggleActive(index) {
+      const updatedIsActive = this.isActive.map((active, idx) => idx === index);
+      this.updateIsActive(updatedIsActive);
 
+      if (index === 4 && updatedIsActive[4]) {
+        this.tapMenuActive();
+      }
+    },
+    tapMenuActive() {
+      this.tapMenuOn();
+    },
+  },
   components: {
     WeelDescription,
+    TapMenuForm,
   },
 };
 </script>
@@ -99,10 +160,10 @@ export default {
   height: 100%;
   margin: 0 auto;
   background: #fff;
-  font-size: 17px;
-  line-height: 1.3;
-  line-height: 1.3;
-  padding-bottom: 80px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 150%;
+  padding-bottom: 64px;
 }
 
 * {
@@ -270,7 +331,8 @@ input[type="radio"] {
   border: none;
   -webkit-appearance: none;
 }
-input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -284,6 +346,10 @@ button {
   cursor: pointer;
 }
 main {
+  text-align: left;
+  font-weight: 400;
+  color: #fff;
+  font-size: 14px;
   max-height: calc(100% - 220px);
 }
 button,
@@ -417,7 +483,7 @@ h2 {
 }
 nav {
   position: fixed;
-  padding: 10px;
+  padding: 0 10px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -431,12 +497,57 @@ nav {
   box-sizing: border-box;
   align-items: flex-end;
 }
-nav a {
-  padding: 10px;
+nav > * {
+  position: relative;
   font-size: 11px;
   color: #888;
+  padding: 20px;
+  width: 24px;
+  height: 24px;
+  display: block;
 }
-#nav a.router-link-exact-active {
-  color: #ff8c21;
+nav > *::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #00cd95;
+  content: "";
+  transition: width 0.5s;
+}
+nav > *.active::before {
+  width: 100%;
+}
+.btn-nav-map {
+  background: url(./assets/nav_map_icon.png) no-repeat center center;
+}
+.btn-nav-alert {
+  background: url(./assets/nav_alert_icon.png) no-repeat center center;
+}
+.btn-nav-bookmark {
+  background: url(./assets/nav_bookmark_icon.png) no-repeat center center;
+}
+.btn-nav-options {
+  background: url(./assets/nav_options.icon.png) no-repeat center center;
+}
+.btn-nav-tapmenu {
+  background: url(./assets/nav_tapmenu_icon.png) no-repeat center center;
+}
+.btn-nav-map-on {
+  background: url(./assets/nav_map_icon_on.png) no-repeat center center;
+}
+.btn-nav-alert-on {
+  background: url(./assets/nav_alert_icon_on.png) no-repeat center center;
+}
+.btn-nav-bookmark-on {
+  background: url(./assets/nav_bookmark_icon_on.png) no-repeat center center;
+}
+.btn-nav-options-on {
+  background: url(./assets/nav_options.icon_on.png) no-repeat center center;
+}
+.btn-nav-tapmenu-on {
+  background: url(./assets/nav_tapmenu_icon_on.png) no-repeat center center;
 }
 </style>

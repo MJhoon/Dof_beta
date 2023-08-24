@@ -11,8 +11,8 @@
     </template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="white">거부</button>
-        <button class="black">허용</button>
+        <button class="left">거부</button>
+        <button class="right">허용</button>
       </div>
     </template>
   </Modal>
@@ -54,7 +54,7 @@ export default {
   name: "AddGoogleMap",
   data() {
     return {
-      center: { lat: -33.919, lng: 151.228 },
+      center: this.$store.state.centerPosition,
       locationMarkers: this.weelData,
       mapStyle: [
         {

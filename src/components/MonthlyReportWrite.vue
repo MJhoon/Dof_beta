@@ -1,12 +1,12 @@
 <template>
-  <div class="report-page">
-    <header>
+  <div class="report-page pageWrap">
+    <HeaderForm>
       <button
         class="btn-back"
-        @click="$router.push('/login/:userid/report')"
+        @click="$router.push(`/login/${this.$store.state.userId}/report`)"
       ></button>
       <h4>월간 리포트 작성</h4>
-    </header>
+    </HeaderForm>
     <main style="margin: 20px; text-align: left; overflow-y: auto">
       <form>
         <div class="report-date">
@@ -102,7 +102,7 @@
             취소
           </button>
           <button
-            type="submit"
+            type="button"
             @click="$store.commit('modalOn', 'modalReportCreate')"
           >
             작성
@@ -119,8 +119,8 @@
     <template v-slot:text>작성중이던 내용은 저장되지 않습니다.</template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="white" @click="$store.commit('modalOff','modalReportCreateCancel')">아니오</button>
-        <button @click="$router.push('/login/:userid/report')">네</button>
+        <button class="left" @click="$store.commit('modalOff','modalReportCreateCancel')">아니오</button>
+        <button class="right" @click="$router.push(`/login/${$store.state.userId}/report`)">네</button>
       </div>
     </template>
   </Modal>
@@ -128,11 +128,11 @@
     v-if="$store.state.modalReportCreate === true"
     :currentModalpage="$store.state.currentModalpage.modalReportCreate"
   >
-    <template v-slot:title>월간 리포트 작성을 완료하시겠습니까?</template>
+    <template v-slot:title>월간 리포트 작성을 완료하시겠습니까? {{$store.state.userId}}</template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="white" @click="$store.commit('modalOff','modalReportCreate')">아니오</button>
-        <button @click="montlyReport">네</button>
+        <button class="left" @click="$store.commit('modalOff','modalReportCreate')">아니오</button>
+        <button class="right" @click="montlyReport">네</button>
       </div>
     </template>
   </Modal>
@@ -141,11 +141,13 @@
 <script>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import Modal from "./ModalForm.vue";
+import HeaderForm from "../components/HeaderForm.vue"
 
 export default {
   components: {
     VueDatePicker,
     Modal,
+    HeaderForm,
   },
   data() {
     return {
@@ -165,6 +167,7 @@ export default {
   },
   methods: {
     montlyReport() {
+      const userId = this.$store.state.userId
       var report = {
         startDate: this.startDatePicked,
         endDate: this.endDatePicked,
@@ -176,7 +179,7 @@ export default {
         comments: this.commentsPicked,
       };
       this.$store.state.reportData.unshift(report);
-      this.$router.push("/login/:userid/report");
+      this.$router.push(`/login/${userId}/report`);
     },
     format() {
       const day = new Date().getDate();

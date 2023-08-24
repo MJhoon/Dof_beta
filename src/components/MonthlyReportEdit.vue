@@ -1,9 +1,9 @@
 <template>
-  <div class="report-page">
-    <header>
-      <button class="btn-back" @click="$router.push('/login/:userid/report')"></button>
+  <div class="report-page pageWrap">
+    <HeaderForm>
+      <button class="btn-back" @click="$router.push(`/login/${$store.state.userId}/report`)"></button>
       <h4>월간 리포트 수정 {{$route.params.id}}</h4>
-    </header>
+    </HeaderForm>
     <main style="margin: 20px; text-align: left; overflow-y: auto">
       <form>
         <div class="report-date">
@@ -14,14 +14,12 @@
               model-type="yyyy.MM.dd"
               :enable-time-picker="false"
               teleport-center
-              :placeholder="$store.state.reportData[$route.params.id].startDate"
             />
             <VueDatePicker
               v-model="endDatePicked"
               model-type="yyyy.MM.dd"
               :enable-time-picker="false"
               teleport-center
-              :placeholder="$store.state.reportData[$route.params.id].endDate"
             />
           </div>
         </div>
@@ -95,11 +93,11 @@
           <textarea type="text" v-model="commentsPicked"></textarea>
         </div>
         <div class="report-confirm">
-          <button @click="$store.commit('modalOn', 'modalReportEditdelete')">
+          <button type="button" @click="$store.commit('modalOn', 'modalReportEditdelete')">
             삭제
           </button>
           <button
-            type="submit"
+            type="button"
             @click="$store.commit('modalOn', 'modalReportEdit')"
           >
             수정
@@ -116,8 +114,8 @@
     <template v-slot:text>월간리포트를 삭제하면 <br/>해당 데이터를 더이상 볼 수 없습니다.</template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="white" @click="$store.commit('modalOff','modalReportEditdelete')">아니오</button>
-        <button @click="onDeleteReport">삭제</button>
+        <button class="left" @click="$store.commit('modalOff','modalReportEditdelete')">아니오</button>
+        <button class="right" @click="onDeleteReport">삭제</button>
       </div>
     </template>
   </Modal>
@@ -128,8 +126,8 @@
     <template v-slot:title>월간 리포트를 수정하시겠습니까?</template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="white" @click="$store.commit('modalOff','modalReportEdit')">아니오</button>
-        <button @click="montlyReport">네</button>
+        <button class="left" @click="$store.commit('modalOff','modalReportEdit')">아니오</button>
+        <button class="right" @click="montlyReport">네</button>
       </div>
     </template>
   </Modal>
@@ -138,16 +136,18 @@
 <script>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import Modal from "./ModalForm.vue";
+import HeaderForm from './HeaderForm.vue';
 
 export default {
   components: {
     VueDatePicker,
     Modal,
+    HeaderForm,
   },
   data() {
     return {
-      startDatePicked: "",
-      endDatePicked: "",
+      startDatePicked: this.$store.state.reportData[this.$route.params.id].startDate,
+      endDatePicked: this.$store.state.reportData[this.$route.params.id].endDate,
       weelNamePicked: "",
       ownerPicked: "",
       grossVolumePicked: this.$store.state.reportData[this.$route.params.id].grossVolume,
@@ -171,7 +171,8 @@ export default {
 			const id = this.$route.params.id;
 			const startDate  = this.$store.state.reportData[this.$route.params.id].startDate;
 			this.$store.commit('deleteReport',  {id , startDate});
-			this.$router.push("/login/:userid/report");
+      this.$store.commit('modalOff','modalReportEditdelete');
+			this.$router.push(`/login/${this.$store.state.userId}/report`);
 		},
     montlyReport() {
       var report = {
@@ -183,9 +184,11 @@ export default {
         grossVolume: this.grossVolumePicked,
         totalFluids: this.totalFluidsPicked,
         comments: this.commentsPicked,
+        edited: true,
       };
-      this.$store.state.reportData.pop(report);
-      this.$router.push("/login/:userid/report");
+      this.$store.state.reportData.splice(this.$route.params.id, 1 ,report);
+      this.$store.commit('modalOff','modalReportEdit');
+      this.$router.push(`/login/${this.$store.state.userId}/report`);
     },
     format() {
       const day = new Date().getDate();
@@ -250,7 +253,10 @@ export default {
   padding-left: 15px;
   background: transparent;
   cursor: pointer;
-  color: #5f667a;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 150%;
+	color: #fff;
 }
 
 .selectBox2 .optionList {

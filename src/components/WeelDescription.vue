@@ -55,7 +55,7 @@ export default {
     handleReport(){
       // if(this.$store.state.weelData.report === false){
         this.$store.commit('modalOff','weelDescriptionOn');
-        this.$router.push('/login/:userid/report');
+        this.$router.push(`/login/${this.$store.state.userId}/report`);
       // }
     },
 		toggleDetail() {

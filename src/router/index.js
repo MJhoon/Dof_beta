@@ -4,6 +4,8 @@ import AddGoogleMap from "../components/AddGoogleMap.vue";
 import MonthlyReport from "../components/MonthlyReport.vue";
 import MonthlyReportWrite from "../components/MonthlyReportWrite.vue";
 import MonthlyReportEdit from "../components/MonthlyReportEdit.vue";
+import ViewMonthlyReport from "../components/ViewMonthlyReport.vue";
+import WorkList from "../components/WorkList.vue";
 
 const routes = [
   {
@@ -17,7 +19,12 @@ const routes = [
     component: AddGoogleMap,
   },
   {
-    path: "/login/:userid/report",
+    path: `/login/:userid/worklist`,
+    name: "worklist",
+    component: WorkList,
+  },
+  {
+    path: `/login/:userid/report`,
     name: "MonthlyReport",
     component: MonthlyReport,
   },
@@ -27,7 +34,12 @@ const routes = [
     component: MonthlyReportWrite,
   },
   {
-    path: "/login/:userid/report/:id",
+    path: "/login/:userid/report/view/:id",
+    name: "ViewMonthlyReport",
+    component: ViewMonthlyReport,
+  },
+  {
+    path: "/login/:userid/report/view/:id/edit:id",
     name: "MonthlyReportEdit",
     component: MonthlyReportEdit,
   },

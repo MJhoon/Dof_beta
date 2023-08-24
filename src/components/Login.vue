@@ -156,10 +156,6 @@ header {
 }
 
 /* Common */
-.right {
-  display: flex;
-  justify-content: flex-end;
-}
 .w100 {
   width: 100%;
 }

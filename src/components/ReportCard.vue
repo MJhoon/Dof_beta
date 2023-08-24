@@ -3,7 +3,7 @@
     <div class="report-card-title">
       <h5>{{report.weelName}}</h5>
       <div class="report-card-sub-title">
-        <p>작성날짜</p>
+        <p>{{report.edited ? '수정' : '작성'}}날짜</p>
         <p>{{report.reportCreateDate}}</p>
       </div>
     </div>
@@ -28,7 +28,7 @@ export default {
   text-align: left;
   background-color: #252935;
   border-radius: 8px;
-  margin: 4px 20px;
+  margin: 5px 20px;
 }
 .report-card-title {
   margin-bottom: 20px;

@@ -130,8 +130,8 @@
       </template>
       <template v-slot:btn-box>
         <div class="btn-box">
-          <button class="white">취소</button>
-          <button class="black" @click="$store.commit('workCheckListSend',workCheck,selectedDate)">업무요청</button>
+          <button class="left">취소</button>
+          <button class="right" @click="$store.commit('workCheckListSend',workCheck,selectedDate)">업무요청</button>
         </div>
       </template>
     </Modal>
@@ -157,8 +157,8 @@
       </template>
       <template v-slot:btn-box>
         <div class="btn-box">
-          <button class="white">취소</button>
-          <button class="black" @click="$store.commit('workCheckListSend',workCheck,selectedDate)">업무요청</button>
+          <button class="left">취소</button>
+          <button class="right" @click="$store.commit('workCheckListSend',workCheck,selectedDate)">업무요청</button>
         </div>
       </template>
     </Modal>
@@ -169,8 +169,8 @@
       <template v-slot:title>업무 요청이 완료 되었습니다.</template>
       <template v-slot:btn-box>
         <div class="btn-box">
-          <button class="white">업무 관리로 이동</button>
-          <button class="black" @click="$store.commit('weelDescriptionOff')">홈으로 이동</button>
+          <button class="left">업무 관리로 이동</button>
+          <button class="right" @click="$store.commit('weelDescriptionOff')">홈으로 이동</button>
         </div>
       </template>
     </Modal>
