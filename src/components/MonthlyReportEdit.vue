@@ -1,109 +1,119 @@
 <template>
   <div class="report-page pageWrap">
     <HeaderForm>
-      <button class="btn-back" @click="$router.push(`/login/${$store.state.userId}/report`)"></button>
-      <h4>월간 리포트 수정 {{$route.params.id}}</h4>
+      <button
+        class="btn-back"
+        @click="$router.push(`/login/${$store.state.userId}/report`)"
+      ></button>
+      <h4>월간 리포트 수정 {{ $route.params.id }}</h4>
     </HeaderForm>
-    <main style="margin: 20px; text-align: left; overflow-y: auto">
-      <form>
-        <div class="report-date">
-          <p>기간 선택</p>
-          <div class="report-date-picker-flex">
-            <VueDatePicker
-              v-model="startDatePicked"
-              model-type="yyyy.MM.dd"
-              :enable-time-picker="false"
-              teleport-center
-            />
-            <VueDatePicker
-              v-model="endDatePicked"
-              model-type="yyyy.MM.dd"
-              :enable-time-picker="false"
-              teleport-center
-            />
-          </div>
-        </div>
-        <div class="report-select-weel">
-          <p>WEEL 선택</p>
-          <div class="box">
-            <div class="selectBox2">
-              <button
-                class="label"
-                @click="$store.commit('toggleDropdown', '0')"
-              >
-                {{ $store.state.selectedWeel }}
-              </button>
-              <ul class="optionList" v-show="$store.state.dropdownActive[0]">
-                <li
-                  class="optionItem"
-                  v-for="(weel, index) in $store.state.Weels"
-                  :key="index"
-                  @click="$store.commit('selectWeel', weel)"
-                >
-                  {{ weel }}
-                </li>
-              </ul>
+    <main
+      style="text-align: left; overflow-y: auto; height: calc(100% - 152px)"
+    >
+      <div class="view-content">
+        <form>
+          <div class="report-date">
+            <p>기간 선택</p>
+            <div class="report-date-picker-flex">
+              <VueDatePicker
+                v-model="startDatePicked"
+                model-type="yyyy.MM.dd"
+                :enable-time-picker="false"
+                teleport-center
+              />
+              <VueDatePicker
+                v-model="endDatePicked"
+                model-type="yyyy.MM.dd"
+                :enable-time-picker="false"
+                teleport-center
+              />
             </div>
           </div>
-        </div>
-        <div class="report-select-owner">
-          <p>OWNER</p>
-          <div class="box">
-            <div class="selectBox2">
-              <button
-                class="label"
-                @click="$store.commit('toggleDropdown', '1')"
-              >
-                {{ $store.state.selectedOwner }}
-              </button>
-              <ul class="optionList" v-show="$store.state.dropdownActive[1]">
-                <li
-                  class="optionItem"
-                  v-for="(owner, index) in $store.state.owners"
-                  :key="index"
-                  @click="$store.commit('selectOwner', owner)"
+          <div class="report-select-weel">
+            <p>WEEL 선택</p>
+            <div class="box">
+              <div class="selectBox2">
+                <button
+                  class="label"
+                  @click="$store.commit('toggleDropdown', '0')"
                 >
-                  {{ owner }}
-                </li>
-              </ul>
+                  {{ $store.state.selectedWeel }}
+                </button>
+                <ul class="optionList" v-show="$store.state.dropdownActive[0]">
+                  <li
+                    class="optionItem"
+                    v-for="(weel, index) in $store.state.Weels"
+                    :key="index"
+                    @click="$store.commit('selectWeel', weel)"
+                  >
+                    {{ weel }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="report-quantity">
-          <p>수량입력</p>
-          <div class="report-gross-volume">
-            <p>GROSS PRODUCTION VOLUME</p>
-            <input
-              type="number"
-              placeholder="000"
-              v-model="grossVolumePicked"
-            />
+          <div class="report-select-owner">
+            <p>OWNER</p>
+            <div class="box">
+              <div class="selectBox2">
+                <button
+                  class="label"
+                  @click="$store.commit('toggleDropdown', '1')"
+                >
+                  {{ $store.state.selectedOwner }}
+                </button>
+                <ul class="optionList" v-show="$store.state.dropdownActive[1]">
+                  <li
+                    class="optionItem"
+                    v-for="(owner, index) in $store.state.owners"
+                    :key="index"
+                    @click="$store.commit('selectOwner', owner)"
+                  >
+                    {{ owner }}
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="report-total-fluids">
-            <p>TOTAL FLUIDS</p>
-            <input
-              type="number"
-              placeholder="000"
-              v-model="totalFluidsPicked"
-            />
+          <div class="report-quantity">
+            <p>수량입력</p>
+            <div class="report-gross-volume">
+              <p>GROSS PRODUCTION VOLUME</p>
+              <input
+                type="number"
+                placeholder="000"
+                v-model="grossVolumePicked"
+              />
+            </div>
+            <div class="report-total-fluids">
+              <p>TOTAL FLUIDS</p>
+              <input
+                type="number"
+                placeholder="000"
+                v-model="totalFluidsPicked"
+              />
+            </div>
           </div>
-        </div>
-        <div class="report-coments">
-          <p>COMMENTS</p>
-          <textarea type="text" v-model="commentsPicked"></textarea>
-        </div>
-        <div class="report-confirm">
-          <button type="button" @click="$store.commit('modalOn', 'modalReportEditdelete')">
-            삭제
-          </button>
-          <button
-            type="button"
-            @click="$store.commit('modalOn', 'modalReportEdit')"
-          >
-            수정
-          </button>
-        </div>
-      </form>			
+          <div class="report-coments">
+            <p>COMMENTS</p>
+            <textarea type="text" v-model="commentsPicked"></textarea>
+          </div>
+          <div class="report-confirm">
+            <button
+              type="button"
+              @click="$store.commit('modalOn', 'modalReportEditdelete')"
+            >
+              삭제
+            </button>
+            <button
+              type="button"
+              @click="$store.commit('modalOn', 'modalReportEdit')"
+            >
+              수정
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   </div>
   <Modal
@@ -111,10 +121,18 @@
     :currentModalpage="$store.state.currentModalpage.modalReportEditdelete"
   >
     <template v-slot:title>월간 리포트 삭제하시겠습니까?</template>
-    <template v-slot:text>월간리포트를 삭제하면 <br/>해당 데이터를 더이상 볼 수 없습니다.</template>
+    <template v-slot:text
+      >월간리포트를 삭제하면 <br />해당 데이터를 더이상 볼 수
+      없습니다.</template
+    >
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="left" @click="$store.commit('modalOff','modalReportEditdelete')">아니오</button>
+        <button
+          class="left"
+          @click="$store.commit('modalOff', 'modalReportEditdelete')"
+        >
+          아니오
+        </button>
         <button class="right" @click="onDeleteReport">삭제</button>
       </div>
     </template>
@@ -126,7 +144,12 @@
     <template v-slot:title>월간 리포트를 수정하시겠습니까?</template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="left" @click="$store.commit('modalOff','modalReportEdit')">아니오</button>
+        <button
+          class="left"
+          @click="$store.commit('modalOff', 'modalReportEdit')"
+        >
+          아니오
+        </button>
         <button class="right" @click="montlyReport">네</button>
       </div>
     </template>
@@ -136,7 +159,7 @@
 <script>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import Modal from "./ModalForm.vue";
-import HeaderForm from './HeaderForm.vue';
+import HeaderForm from "./HeaderForm.vue";
 
 export default {
   components: {
@@ -146,34 +169,40 @@ export default {
   },
   data() {
     return {
-      startDatePicked: this.$store.state.reportData[this.$route.params.id].startDate,
-      endDatePicked: this.$store.state.reportData[this.$route.params.id].endDate,
+      startDatePicked:
+        this.$store.state.reportData[this.$route.params.id].startDate,
+      endDatePicked:
+        this.$store.state.reportData[this.$route.params.id].endDate,
       weelNamePicked: "",
       ownerPicked: "",
-      grossVolumePicked: this.$store.state.reportData[this.$route.params.id].grossVolume,
-      totalFluidsPicked: this.$store.state.reportData[this.$route.params.id].totalFluids,
-      commentsPicked: this.$store.state.reportData[this.$route.params.id].comments,
+      grossVolumePicked:
+        this.$store.state.reportData[this.$route.params.id].grossVolume,
+      totalFluidsPicked:
+        this.$store.state.reportData[this.$route.params.id].totalFluids,
+      commentsPicked:
+        this.$store.state.reportData[this.$route.params.id].comments,
       reportCreateDate: this.format(),
     };
   },
-	mounted(){
-		const id = this.$route.params.id;
-		console.log(id);
-		console.log(this.$store.state.reportData);
+  mounted() {
+    const id = this.$route.params.id;
+    console.log(id);
+    console.log(this.$store.state.reportData);
 
-		if(id >= 0){
-			this.$store.commit('setSelectedWeel',{ id });
-			this.$store.commit('setSelectedOwner',{ id });
-		}
-	},
+    if (id >= 0) {
+      this.$store.commit("setSelectedWeel", { id });
+      this.$store.commit("setSelectedOwner", { id });
+    }
+  },
   methods: {
-		onDeleteReport() {
-			const id = this.$route.params.id;
-			const startDate  = this.$store.state.reportData[this.$route.params.id].startDate;
-			this.$store.commit('deleteReport',  {id , startDate});
-      this.$store.commit('modalOff','modalReportEditdelete');
-			this.$router.push(`/login/${this.$store.state.userId}/report`);
-		},
+    onDeleteReport() {
+      const id = this.$route.params.id;
+      const startDate =
+        this.$store.state.reportData[this.$route.params.id].startDate;
+      this.$store.commit("deleteReport", { id, startDate });
+      this.$store.commit("modalOff", "modalReportEditdelete");
+      this.$router.push(`/login/${this.$store.state.userId}/report`);
+    },
     montlyReport() {
       var report = {
         startDate: this.startDatePicked,
@@ -186,16 +215,16 @@ export default {
         comments: this.commentsPicked,
         edited: true,
       };
-      this.$store.state.reportData.splice(this.$route.params.id, 1 ,report);
-      this.$store.commit('modalOff','modalReportEdit');
+      this.$store.state.reportData.splice(this.$route.params.id, 1, report);
+      this.$store.commit("modalOff", "modalReportEdit");
       this.$router.push(`/login/${this.$store.state.userId}/report`);
     },
     format() {
       const day = new Date().getDate();
       const month = new Date().getMonth() + 1;
       const year = new Date().getFullYear();
-			const dayOfWeek = new Date().getDay();
-			const weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const dayOfWeek = new Date().getDay();
+      const weekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
       return `${year}/${month}/${day}(${weekDay[dayOfWeek]})`;
     },
@@ -253,10 +282,10 @@ export default {
   padding-left: 15px;
   background: transparent;
   cursor: pointer;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 150%;
-	color: #fff;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #fff;
 }
 
 .selectBox2 .optionList {
@@ -383,7 +412,7 @@ export default {
 .report-confirm {
   position: fixed;
   left: 50%;
-  bottom: 84px;
+  bottom: 74px;
   transform: translateX(-50%);
   width: calc(100% - 31px);
   margin: 0 auto;

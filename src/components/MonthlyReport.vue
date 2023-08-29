@@ -48,7 +48,7 @@
           :report="report"
           @click="$router.push(`/login/${$store.state.userId}/report/view/${i}`)"
         />
-        <button @click="$router.push(`/login/${$store.state.userId}/report/-1`)">
+        <button class="btn-monthly-report" @click="$router.push(`/login/${$store.state.userId}/report/-1`)">
           월간 리포트 작성
         </button>
       </div>
@@ -86,6 +86,7 @@ export default {
 			}
 		},
 	},
+  
   methods: {
     sortTable() {
       this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
@@ -175,19 +176,5 @@ export default {
 .content-report-card-container {
   position: relative;
   overflow: scroll;
-}
-.content-report-card-container button {
-  position: fixed;
-  left: 50%;
-  bottom: 84px;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
-  background-color: #00cd95;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 27px;
-  padding: 9px 0;
 }
 </style>

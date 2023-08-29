@@ -6,6 +6,10 @@ import MonthlyReportWrite from "../components/MonthlyReportWrite.vue";
 import MonthlyReportEdit from "../components/MonthlyReportEdit.vue";
 import ViewMonthlyReport from "../components/ViewMonthlyReport.vue";
 import WorkList from "../components/WorkList.vue";
+import WorkDone from "../components/WorkDone.vue";
+import FieldReportDone from "../components/FieldReportDone.vue";
+import WorkProgress from "../components/WorkProgress.vue";
+import FieldReportProgress from "../components/FieldReportProgress.vue";
 
 const routes = [
   {
@@ -22,6 +26,26 @@ const routes = [
     path: `/login/:userid/worklist`,
     name: "worklist",
     component: WorkList,
+  },
+  {
+    path: `/login/:userid/worklist/progress`,
+    name: "progress",
+    component: WorkProgress,
+  },
+  {
+    path: `/login/:userid/worklist/workdone`,
+    name: "workdone",
+    component: WorkDone,
+  },
+  {
+    path: `/login/:userid/worklist/progress/fieldReport`,
+    name: "FieldReportProgress",
+    component: FieldReportProgress,
+  },
+  {
+    path: `/login/:userid/worklist/workdone/fieldReport`,
+    name: "FieldReportDone",
+    component: FieldReportDone,
   },
   {
     path: `/login/:userid/report`,

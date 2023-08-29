@@ -6,9 +6,9 @@
       <h4>업무리스트</h4>
     </HeaderForm>
     <div class="worklist-tabbar">
-      <button :style="tabbar[0] ? '':''">업무 요청 <span>5</span></button>
-      <button :style="tabbar[1] ? '':''">업무 진행 <span>5</span></button>
-      <button :style="tabbar[2] ? '':''">업무 완료 <span>10</span></button>
+      <button :class="{active : tabbar[0]}" @click="tapBarHandler(0)">업무 요청 <span>5</span></button>
+      <button :class="{active : tabbar[1]}" @click="tapBarHandler(1)">업무 진행 <span>5</span></button>
+      <button :class="{active : tabbar[2]}" @click="tapBarHandler(2)">업무 완료 <span>10</span></button>
     </div>
     <div class="content-worklist-filter">
       <div class="left">
@@ -40,7 +40,15 @@
         <button></button>
       </div>
     </div>
-    <WorkListCard @click="handleWeelId(weel.id)" v-for="(weel,i) in $store.state.weelData" :key="i" :weel="weel" />
+		<div v-if="tabbar[0] === true">
+			<WorkListRequestCard @click="handleWeelId(weel.id)" v-for="(weel,i) in $store.state.weelData" :key="i" :weel="weel" />
+		</div>
+		<div v-if="tabbar[1] === true">
+			<WorkListProgressCard @click="handleProgress" v-for="(weel,i) in filteredWeelDataProgress" :key="i" :weel="weel"/>
+		</div>
+		<div v-if="tabbar[2] === true">
+			<WorkListDoneCard @click="handleWorkDone" v-for="(weel,i) in filteredWeelDataWorkdone" :key="i"/>
+		</div>
 	</div>
 	<Modal
       v-if="$store.state.modalWorklistRequest === true"
@@ -53,21 +61,37 @@
         <button class="right" @click="transMap">네</button>
       </div>
       </template>
-    </Modal>
+	</Modal>
 </template>
 
 <script>
 import HeaderForm from "./HeaderForm.vue";
 import Modal from './ModalForm.vue';
-import WorkListCard from "./WorkListCard.vue";
+import WorkListRequestCard from "./WorkListRequestCard.vue";
+import WorkListProgressCard from "./WorkListProgressCard.vue"
+import WorkListDoneCard from "./WorkListDoneCard.vue"
 export default {
 	data(){
 		return{
 		clickedWeelId : "",
-		tabbar : [false,false,false]
+		tabbar : [false,true,false]
 		}
 	},
+	computed: {
+    filteredWeelDataProgress() {
+      return this.$store.state.weelData.filter(weel => weel.state === "business_progress");
+    },
+    filteredWeelDataWorkdone() {
+      return this.$store.state.weelData.filter(weel => weel.state === "work_done");
+    }
+  },
 	methods:{
+		handleProgress(){
+			this.$router.push(`/login/${this.$store.state.userId}/worklist/progress`);
+		},
+		handleWorkDone(){
+			this.$router.push(`/login/${this.$store.state.userId}/worklist/workdone`);
+		},
 		handleWeelId(id){
 			this.clickedWeelId = id;
 			this.$store.commit('modalOn','modalWorklistRequest');
@@ -78,10 +102,13 @@ export default {
 			this.$router.push({name : "AddGoogleMap"})
 			this.$store.state.isActive[4] = false
 			this.$store.commit("updateWeelDataPosition", { index: this.$store.state.weelDescriptionId, position: this.$store.state.weelData[this.$store.state.weelDescriptionId].position});
+		},
+		tapBarHandler(clickedIndex){
+			this.tabbar = this.tabbar.map((_, index) => index === clickedIndex);
 		}
 	},
   components: { 
-		HeaderForm, WorkListCard ,Modal,
+		HeaderForm, WorkListRequestCard,WorkListProgressCard,WorkListDoneCard ,Modal,
 	},
 };
 </script>
@@ -99,13 +126,25 @@ export default {
 	display: flex;
 	border-bottom: 1px solid #41485C;
 }
-.worklist-tabbar button{	
+.worklist-tabbar button{
+	position: relative;	
 	font-size: 16px;
 	font-weight: 500;
 	margin: 0 10px;
 	padding: 12px 0;
 	background-color: transparent;
 	color:#9C9CA5;
+}
+.worklist-tabbar button::before{
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+	content: "";
+	width: 0;
+	height: 2px;
+	background: #00CD95;
+	transition: .5s;
 }
 .worklist-tabbar button span{
 	height: 12px;
@@ -114,6 +153,15 @@ export default {
 	text-align: center;
 	border-radius: 12px;
 	background: rgba(156, 156, 165, 0.15);
+}
+.worklist-tabbar button.active {	
+	color: #00986E;
+}
+.worklist-tabbar button.active::before {
+	width: 100%;
+}
+.worklist-tabbar button.active span{	
+	background-color: rgba(46, 195, 136, 0.15);
 }
 .content-worklist-filter {
   display: flex;
@@ -151,7 +199,7 @@ export default {
 .content-worklist-card-container button {
   position: fixed;
   left: 50%;
-  bottom: 84px;
+  bottom: 74px;
   transform: translateX(-50%);
   width: calc(100% - 40px);
   background-color: #00cd95;

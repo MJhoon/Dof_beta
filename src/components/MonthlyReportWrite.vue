@@ -7,108 +7,114 @@
       ></button>
       <h4>월간 리포트 작성</h4>
     </HeaderForm>
-    <main style="margin: 20px; text-align: left; overflow-y: auto">
-      <form>
-        <div class="report-date">
-          <p>기간 선택</p>
-          <div class="report-date-picker-flex">
-            <VueDatePicker
-              v-model="startDatePicked"
-              model-type="yyyy.MM.dd"
-              :enable-time-picker="false"
-              placeholder="시작일"
-              teleport-center
-            />
-            <VueDatePicker
-              v-model="endDatePicked"
-              model-type="yyyy.MM.dd"
-              :enable-time-picker="false"
-              placeholder="종류일"
-              teleport-center
-            />
-          </div>
-        </div>
-        <div class="report-select-weel">
-          <p>WEEL 선택</p>
-          <div class="box">
-            <div class="selectBox2">
-              <button
-                class="label"
-                @click="$store.commit('toggleDropdown', '0')"
-              >
-                {{ $store.state.selectedWeel }}
-              </button>
-              <ul class="optionList" v-show="$store.state.dropdownActive[0]">
-                <li
-                  class="optionItem"
-                  v-for="(weel, index) in $store.state.Weels"
-                  :key="index"
-                  @click="$store.commit('selectWeel', weel)"
-                >
-                  {{ weel }}
-                </li>
-              </ul>
+    <main
+      style="text-align: left; overflow-y: auto; height: calc(100% - 152px)"
+    >
+      <div class="view-content">
+        <form>
+          <div class="report-date">
+            <p>기간 선택</p>
+            <div class="report-date-picker-flex">
+              <VueDatePicker
+                v-model="startDatePicked"
+                model-type="yyyy.MM.dd"
+                :enable-time-picker="false"
+                placeholder="시작일"
+                teleport-center
+              />
+              <VueDatePicker
+                v-model="endDatePicked"
+                model-type="yyyy.MM.dd"
+                :enable-time-picker="false"
+                placeholder="종류일"
+                teleport-center
+              />
             </div>
           </div>
-        </div>
-        <div class="report-select-owner">
-          <p>OWNER</p>
-          <div class="box">
-            <div class="selectBox2">
-              <button
-                class="label"
-                @click="$store.commit('toggleDropdown', '1')"
-              >
-                {{ $store.state.selectedOwner }}
-              </button>
-              <ul class="optionList" v-show="$store.state.dropdownActive[1]">
-                <li
-                  class="optionItem"
-                  v-for="(owner, index) in $store.state.owners"
-                  :key="index"
-                  @click="$store.commit('selectOwner', owner)"
+          <div class="report-select-weel">
+            <p>WEEL 선택</p>
+            <div class="box">
+              <div class="selectBox2">
+                <button
+                  class="label"
+                  @click="$store.commit('toggleDropdown', '0')"
                 >
-                  {{ owner }}
-                </li>
-              </ul>
+                  {{ $store.state.selectedWeel }}
+                </button>
+                <ul class="optionList" v-show="$store.state.dropdownActive[0]">
+                  <li
+                    class="optionItem"
+                    v-for="(weel, index) in $store.state.Weels"
+                    :key="index"
+                    @click="$store.commit('selectWeel', weel)"
+                  >
+                    {{ weel }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="report-quantity">
-          <p>수량입력</p>
-          <div class="report-gross-volume">
-            <p>GROSS PRODUCTION VOLUME</p>
-            <input
-              type="number"
-              placeholder="000"
-              v-model="grossVolumePicked"
-            />
+          <div class="report-select-owner">
+            <p>OWNER</p>
+            <div class="box">
+              <div class="selectBox2">
+                <button
+                  class="label"
+                  @click="$store.commit('toggleDropdown', '1')"
+                >
+                  {{ $store.state.selectedOwner }}
+                </button>
+                <ul class="optionList" v-show="$store.state.dropdownActive[1]">
+                  <li
+                    class="optionItem"
+                    v-for="(owner, index) in $store.state.owners"
+                    :key="index"
+                    @click="$store.commit('selectOwner', owner)"
+                  >
+                    {{ owner }}
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="report-total-fluids">
-            <p>TOTAL FLUIDS</p>
-            <input
-              type="number"
-              placeholder="000"
-              v-model="totalFluidsPicked"
-            />
+          <div class="report-quantity">
+            <p>수량입력</p>
+            <div class="report-gross-volume">
+              <p>GROSS PRODUCTION VOLUME</p>
+              <input
+                type="number"
+                placeholder="000"
+                v-model="grossVolumePicked"
+              />
+            </div>
+            <div class="report-total-fluids">
+              <p>TOTAL FLUIDS</p>
+              <input
+                type="number"
+                placeholder="000"
+                v-model="totalFluidsPicked"
+              />
+            </div>
           </div>
-        </div>
-        <div class="report-coments">
-          <p>COMMENTS</p>
-          <textarea type="text" v-model="commentsPicked"></textarea>
-        </div>
-        <div class="report-confirm">
-          <button @click="$store.commit('modalOn', 'modalReportCreateCancel')">
-            취소
-          </button>
-          <button
-            type="button"
-            @click="$store.commit('modalOn', 'modalReportCreate')"
-          >
-            작성
-          </button>
-        </div>
-      </form>
+          <div class="report-coments">
+            <p>COMMENTS</p>
+            <textarea type="text" v-model="commentsPicked"></textarea>
+          </div>
+          <div class="report-confirm">
+            <button
+              @click="$store.commit('modalOn', 'modalReportCreateCancel')"
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              @click="$store.commit('modalOn', 'modalReportCreate')"
+            >
+              작성
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   </div>
   <Modal
@@ -119,8 +125,18 @@
     <template v-slot:text>작성중이던 내용은 저장되지 않습니다.</template>
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="left" @click="$store.commit('modalOff','modalReportCreateCancel')">아니오</button>
-        <button class="right" @click="$router.push(`/login/${$store.state.userId}/report`)">네</button>
+        <button
+          class="left"
+          @click="$store.commit('modalOff', 'modalReportCreateCancel')"
+        >
+          아니오
+        </button>
+        <button
+          class="right"
+          @click="$router.push(`/login/${$store.state.userId}/report`)"
+        >
+          네
+        </button>
       </div>
     </template>
   </Modal>
@@ -128,10 +144,17 @@
     v-if="$store.state.modalReportCreate === true"
     :currentModalpage="$store.state.currentModalpage.modalReportCreate"
   >
-    <template v-slot:title>월간 리포트 작성을 완료하시겠습니까? {{$store.state.userId}}</template>
+    <template v-slot:title
+      >월간 리포트 작성을 완료하시겠습니까? {{ $store.state.userId }}</template
+    >
     <template v-slot:btn-box>
       <div class="btn-box">
-        <button class="left" @click="$store.commit('modalOff','modalReportCreate')">아니오</button>
+        <button
+          class="left"
+          @click="$store.commit('modalOff', 'modalReportCreate')"
+        >
+          아니오
+        </button>
         <button class="right" @click="montlyReport">네</button>
       </div>
     </template>
@@ -141,7 +164,7 @@
 <script>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import Modal from "./ModalForm.vue";
-import HeaderForm from "../components/HeaderForm.vue"
+import HeaderForm from "../components/HeaderForm.vue";
 
 export default {
   components: {
@@ -162,12 +185,12 @@ export default {
     };
   },
   mounted() {
-      this.$store.commit("setSelectedWeel","-1" );
-      this.$store.commit("setSelectedOwner","-1" );
+    this.$store.commit("setSelectedWeel", "-1");
+    this.$store.commit("setSelectedOwner", "-1");
   },
   methods: {
     montlyReport() {
-      const userId = this.$store.state.userId
+      const userId = this.$store.state.userId;
       var report = {
         startDate: this.startDatePicked,
         endDate: this.endDatePicked,
@@ -371,7 +394,7 @@ export default {
 .report-confirm {
   position: fixed;
   left: 50%;
-  bottom: 84px;
+  bottom: 74px;
   transform: translateX(-50%);
   width: calc(100% - 31px);
   margin: 0 auto;

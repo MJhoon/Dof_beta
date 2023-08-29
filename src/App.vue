@@ -350,7 +350,6 @@ main {
   font-weight: 400;
   color: #fff;
   font-size: 14px;
-  max-height: calc(100% - 220px);
 }
 button,
 input[type="button"],
@@ -467,7 +466,21 @@ input:-moz-placeholder {
     url(assets/font/NotoSansKR-Light.woff) format("woff");
   font-weight: normal;
 }
-
+/* common */
+.btn-monthly-report{
+	position: fixed;
+  left: 50%;
+  bottom: 74px;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  background-color: #00cd95;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  padding: 9px 0;
+} 
 /* 커스텀 */
 input {
   padding: 11px;

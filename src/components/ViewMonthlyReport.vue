@@ -7,9 +7,9 @@
       ></button>
       <h4>월간 리포트 보기 {{ $route.params.id }}</h4>
     </HeaderForm>
-    <main style="margin: 20px; text-align: left; overflow-y: auto">
+    <main style="text-align: left; overflow-y: auto; height: calc(100% - 152px)">
       <div class="view-content">
-        <div class="view-weel-info">
+        <div class="content-info">
           <h4 class="content-title-green">WEEL information</h4>
           <div>
             <p class="content-sub-title-text">기간</p>
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div class="view-input-info">
+        <div class="content-input-info">
           <h4 class="content-title-green">입력정보</h4>
           <div>
             <p class="content-sub-title-text">GROSS PRODUCTION VOLUME</p>
@@ -54,7 +54,7 @@
         </div>
         <div class="view-comment">
           <p class="content-sub-title-text">COMENTS</p>
-          <p>
+          <p class="view-comment-area">
             {{ comments }}
           </p>
           <div class="report-confirm">
@@ -146,9 +146,14 @@ export default {
 
 <style>
 .view-content {
-  margin: 0 20px 20px 20px;
+  margin: 20px 20px 20px 20px;
 }
-.view-weel-info div {
+
+.content-info {
+  margin-top: 20px;
+  border-bottom: 1px solid #363b4b;
+}
+.content-info div {
   margin-bottom: 20px;
 }
 .flex {
@@ -169,7 +174,7 @@ export default {
   color: #9c9ca5;
   margin-bottom: 10px;
 }
-.view-input-info div {
+.content-input-info div {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;

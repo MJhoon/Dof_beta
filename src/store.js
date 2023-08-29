@@ -16,7 +16,7 @@ const store = createStore({
       weelDescriptionId: 0,
       weelData: [
         {
-          id: "0",
+          id: "8",
           weelName: "TopOilbank",
           onnerName: "MISA",
           onnerManagerName: "KING",
@@ -35,7 +35,7 @@ const store = createStore({
           workRequest: false,
         },
         {
-          id: "1",
+          id: "88",
           weelName: "TOPOILLBANK",
           onnerName: "DUCKPUENG",
           onnerManagerName: "Jh",
@@ -54,7 +54,7 @@ const store = createStore({
           workRequest: true,
         },
         {
-          id: "2",
+          id: "888",
           weelName: "TOPOILLBANK",
           onnerName: "HANAM",
           onnerManagerName: "QUEEN",
@@ -128,7 +128,9 @@ const store = createStore({
         modalReportCreateCancel: "modalReportCreateCancel",
         modalReportEdit: "modalReportEdit",
         modalReportEditdelete: "modalReportEditdelete",
-        modalWorklistRequest:"modalWorklistRequest"
+        modalWorklistRequest:"modalWorklistRequest",
+        modalReportReRequest:"modalReportReRequest",
+        modalReportConfirm:"modalReportConfirm",
       },
       modalWorkCheckConfirm: false,
       modalWorkCheckDateConfirm: false,
@@ -140,7 +142,9 @@ const store = createStore({
       modalReportCreateCancel: false,
       modalReportEdit: false,
       modalReportEditdelete: false,
-      modalWorklistRequest: false
+      modalWorklistRequest: false,
+      modalReportReRequest: false,
+      modalReportConfirm: false,
       /*모달 상태값*/
     };
   },

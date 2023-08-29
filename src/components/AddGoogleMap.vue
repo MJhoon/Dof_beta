@@ -136,9 +136,16 @@ export default {
   width: 100px;
   height: 100px;
 }
+.custom-marker-wrap{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 .custom-marker-title {
+  color: #252935;
   font-size: 16px;
   font-weight: 700;
+  text-align: center;
 }
 .custom-marker-type {
   font-size: 14px;
